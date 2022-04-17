@@ -1,29 +1,35 @@
 class Store {
-  ctx;
-  constructor(ctx) {
-    this.ctx = ctx;
+  reactions;
+  data;
+  constructor(reactions, data) {
+    this.reactions = reactions;
+    this.data = data;
   }
   dispatch(action) {
-    const reaction = this.ctx.reactions[action.type];
+    const reaction = this.reactions[action.type];
     if (reaction === undefined) return;
-    reaction(this.ctx.data, action);
+    reaction(this.data, action);
   }
   getState() {
-    return this.ctx.data;
+    return this.data;
   }
 }
 class StoreImmutable {
-  ctx;
+  reactions;
+  data;
+  copy;
   dataCopy;
-  constructor(ctx) {
-    this.ctx = ctx;
-    this.dataCopy = this.ctx.copy(this.ctx.data);
+  constructor(reactions, data, copy) {
+    this.reactions = reactions;
+    this.data = data;
+    this.copy = copy;
+    this.dataCopy = this.copy(this.data);
   }
   dispatch(action) {
-    const reaction = this.ctx.reactions[action.type];
+    const reaction = this.reactions[action.type];
     if (reaction === undefined) return;
-    reaction(this.ctx.data, action);
-    this.dataCopy = this.ctx.copy(this.ctx.data);
+    reaction(this.data, action);
+    this.dataCopy = this.copy(this.data);
   }
   getState() {
     return this.dataCopy;
