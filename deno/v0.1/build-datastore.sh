@@ -4,7 +4,7 @@ current_dir=`dirname $0`
 
 target_pathname=$current_dir/mod.ts
 
-es_dir=$current_dir/../es
+es_dir=$current_dir/../../es/v0.1
 es_pathname=$es_dir/datastore.js
 
 # test_target_pathname=$current_dir/datastore.test.ts
