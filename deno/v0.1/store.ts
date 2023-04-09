@@ -1,11 +1,4 @@
-// brian taylor vann
-// store
-
 import type { Action, Reactions, StoreInterface } from "./shared_types.ts";
-
-/*
-  All store actions and ancillary functions must be syncronous
-*/
 
 class Store<D> implements StoreInterface<D> {
   private reactions: Reactions<D>;
