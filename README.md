@@ -8,7 +8,9 @@ Datastore is a portable state manager.
 
 ## About
 
-Data store is a slice of application state. `State` is a context or object reference that exists as a single instance.
+Data store is a slice of application state. `State` is a context or object
+reference that exists as a single instance.
+
 ```
 State { }
 ```
@@ -21,7 +23,8 @@ Action {
 }
 ```
 
-The store modifies itself through reactions. A `reaction` is a function that takes `State` and an `Action` as arguments.
+The store modifies itself through reactions. A `reaction` is a function that
+takes `State` and an `Action` as arguments.
 
 ```
 (state: State, action: Action) => void;
@@ -85,4 +88,3 @@ const state = datastore.getState()
 ## Licence
 
 BSD 3-Clause License
-
