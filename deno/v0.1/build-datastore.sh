@@ -15,5 +15,5 @@ es_pathname=$es_dir/datastore.js
 deno bundle $target_pathname $es_pathname
 # deno bundle --config $tsconfig_pathname $test_target_pathname $test_es_pathname
 
-deno fmt $current_dir
-deno fmt $es_dir/../
+# deno fmt $current_dir
+# deno fmt $es_dir/../

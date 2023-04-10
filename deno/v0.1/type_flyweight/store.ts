@@ -1,6 +1,3 @@
-// brian taylor vann
-// datastore types
-
 interface Action {
   type: string;
 }
