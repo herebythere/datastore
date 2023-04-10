@@ -1,6 +1,6 @@
 import type { Action, Reactions, StoreInterface } from "./shared_types.ts";
 
-class Store<D> implements StoreInterface<D> {
+class StoreMultiChannel<D> implements StoreInterface<D> {
   private reactionMap = new Map<string, Reactions<D>>();
   private data: D;
 
@@ -30,4 +30,4 @@ class Store<D> implements StoreInterface<D> {
   }
 }
 
-export { Store };
+export { StoreMultiChannel };
