@@ -4,7 +4,7 @@ export type {
   Reaction,
   Reactions,
   StoreInterface,
-} from "./shared_types.ts";
+} from "./type_flyweight/store.ts";
 
-export { Store } from "./store.ts";
-export { StoreImmutable } from "./store_immutable.ts";
+export { Store } from "./store/store.ts";
+export { StoreImmutable } from "./store/store_immutable.ts";
