@@ -3,7 +3,7 @@ import type {
   Copy,
   Reactions,
   StoreInterface,
-} from "./shared_types.ts";
+} from "../type_flyweight/store.ts";
 
 class StoreImmutable<D> implements StoreInterface<D> {
   private reactions: Reactions<D>;

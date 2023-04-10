@@ -1,4 +1,8 @@
-import type { Action, Reactions, StoreInterface } from "./shared_types.ts";
+import type {
+  Action,
+  Reactions,
+  StoreInterface,
+} from "../type_flyweight/store.ts";
 
 class Store<D> implements StoreInterface<D> {
   private reactions: Reactions<D>;
