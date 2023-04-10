@@ -13,16 +13,16 @@ class StoreMultiChannel<D> implements StoreInterface<D> {
   }
 
   setChannel(name: string, reactions: Reactions<D>) {
-    this.reactionMap.set(string, reactions);
+    this.reactionMap.set(name, reactions);
   }
 
-  removeChannel(name: string, reactions: Reactions<D>) {
-    this.reactionMap.delete(string, reactions);
+  removeChannel(name: string) {
+    this.reactionMap.delete(name);
   }
 
   dispatch(action: Action) {
-    for (const reactions of this.reactions) {
-      const reaction = this.reactions[action.type];
+    for (const [channel, reactions] of this.reactionMap) {
+      const reaction = reactions[action.type];
       if (reaction === undefined) return;
 
       reaction(this.data, action);
