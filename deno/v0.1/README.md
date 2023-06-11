@@ -10,19 +10,11 @@ bash build-datastore.sh
 
 ## How to use
 
-### Import
-
-Import `Store` or clone this repository into your project.
-
-```
-import { Store } from "https://raw.githubusercontent.com/herebythere/datastore/main/deno/v0.1/mod.ts"
-```
-
 ### State
 
 Create a context for `state`.
 
-The example below defines `state` for a `counter`.
+The following example defines `state` for a `counter`.
 
 ```
 interface State {
@@ -38,7 +30,7 @@ const state = {
 
 Define `actions` by creating context with a `type` property.
 
-The example below defines two `actions`: `increment` and `reset`.
+The following example defines two `actions`: `increment` and `reset`.
 
 ```
 interface Increment {
@@ -55,12 +47,15 @@ type Actions = Increment | Reset;
 
 ### Reactions
 
-Define `Reactions` by creating `reaction` functions for each `action.type`. A
+Define `reactions` by creating `reaction` functions for each `action.type`. A
 `reaction` is a function that takes `state` and an optional `action` as
 arguments and returns a `boolean` to indicate if `state` changed.
 
+The following example defines `reactions` with a `reaction` corresponding to
+each `action`.
+
 ```
-const reactions: Record<string, Reaction> = {
+const reactions: Reactions = {
 	"increment": function(state: State, action: Actions) {
 		if (action.type !== "increment") return false;
 		state.count += action.step;
@@ -73,7 +68,17 @@ const reactions: Record<string, Reaction> = {
 }
 ```
 
-Create a `Store` instsance using with `reactions` and `state`.
+### Import
+
+Import `Store` or clone this repository into your project.
+
+```
+import { Store } from "https://raw.githubusercontent.com/herebythere/datastore/main/deno/v0.1/mod.ts"
+```
+
+### Store
+
+Create a `Store` instsance with `reactions` and `state`.
 
 ```
 const datastore = new Store(reactions, state);

@@ -2,7 +2,9 @@
 
 Manage application data with a portable state manager pattern.
 
-[Deno](./deno/v0.1/) [ECMAScript](./es/v0.1/)
+[Typescript](./deno/v0.1/) (via Deno)
+
+[ECMAScript](./es/v0.1/)
 
 ## Abstract
 
@@ -60,7 +62,7 @@ Store {
 	reactions: Reactions
 	data: State
 	
-	dispatch(action): boolean
+	dispatch(action: Action): boolean
 	getState(): State
 }
 ```

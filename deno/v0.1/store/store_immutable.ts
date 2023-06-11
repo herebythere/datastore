@@ -14,8 +14,8 @@ class StoreImmutable<D> implements StoreInterface<D> {
   constructor(reactions: Reactions<D>, data: D, copyFunc: CopyFunc<D>) {
     this.reactions = reactions;
     this.copyFunc = copyFunc;
-    this.data = this.copyFunc(data);
-    this.dataCopy = this.copyFunc(data);
+    this.data = copyFunc(data);
+    this.dataCopy = copyFunc(data);
   }
 
   dispatch(action: Action): boolean {
