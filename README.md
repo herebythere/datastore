@@ -1,10 +1,9 @@
 # Datastore
 
-Manage application data.
+Manage application data with a portable state manager pattern.
 
-## About
-
-`Datastore` is a portable state manager pattern.
+[Deno](./deno/v0.1/)
+[ECMAScript](./es/v0.1/)
 
 ## Abstract
 
