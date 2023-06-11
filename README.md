@@ -8,14 +8,14 @@ Manage application data.
 
 ## Abstract
 
-`Datastore` is application state. `State` is a context or object reference that
-exists as a single instance.
+`Datastore` is application state. `State` is a singular context or object
+instance.
 
 ```
 State { }
 ```
 
-An action is a context that provides the store with details to update state.
+An `action` provides the store with details to update state.
 
 ```
 Action {
@@ -24,7 +24,8 @@ Action {
 }
 ```
 
-A `reaction` is a function that takes `State` and an `Action` as arguments.
+A `reaction` is a function that takes `State` and an `Action` as arguments. Data
+from the `action` can be used to update `state`.
 
 ```
 (state: State, action: Action) => void;
