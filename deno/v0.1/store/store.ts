@@ -13,11 +13,11 @@ class Store<D> implements StoreInterface<D> {
     this.data = data;
   }
 
-  dispatch(action: Action) {
-    if (!this.reactions.hasOwnProperty(action.type)) return;
+  dispatch(action: Action): boolean {
+    if (!this.reactions.hasOwnProperty(action.type)) return false;
 
     const reaction = this.reactions[action.type];
-    reaction(this.data, action);
+    return reaction(this.data, action);
   }
 
   getState(): D {

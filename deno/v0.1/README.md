@@ -10,38 +10,70 @@ bash build-datastore.sh
 
 ## How to use
 
+### Import
+
 Import `Store` or clone this repository into your project.
 
 ```
 import { Store } from "https://raw.githubusercontent.com/herebythere/datastore/main/deno/v0.1/mod.ts"
 ```
 
-Create a context for `state`:
+### State
+
+Create a context for `state`.
+
+The example below defines `state` for a `counter`.
 
 ```
+interface State {
+  count: number,
+}
+
 const state = {
 	count: 0;
 }
 ```
 
-Create a `reaction` map. A `reaction` is a function that takes an action and
-state as an argument.
+### Actions
+
+Define `actions` by creating context with a `type` property.
+
+The example below defines two `actions`: `increment` and `reset`.
 
 ```
-const reactions = {
-	"increment": function(state, action) {
-		state.count += 1;
+interface Increment {
+	type: "increment";
+	step: number;
+}
+
+interface Reset {
+	type: "reset";
+}
+
+type Actions = Increment | Reset;
+```
+
+### Reactions
+
+Define `Reactions` by creating `reaction` functions for each `action.type`. A
+`reaction` is a function that takes `state` and an optional `action` as
+arguments and returns a `boolean` to indicate if `state` changed.
+
+```
+const reactions: Record<string, Reaction> = {
+	"increment": function(state: State, action: Actions) {
+		if (action.type !== "increment") return false;
+		state.count += action.step;
+		return true;
 	},
-	"decrement": function(state, action) {
-		state.count -= 1;
-	},
-	"reset": function(state, action) {
+	"reset": function(state: State, action: Actions) {
 		state.count = 0;
-	}
+		return true;
+	},
 }
 ```
 
-Create a `Store` instsance using with `reactions` and `state`
+Create a `Store` instsance using with `reactions` and `state`.
 
 ```
 const datastore = new Store(reactions, state);
@@ -50,8 +82,8 @@ const datastore = new Store(reactions, state);
 Next use the `dispatch` method to send an action to the `reaction` map.
 
 ```
-datastore.dispatch({type: "increment"});
-datastore.dispatch({type: "increment"}};
+datastore.dispatch({type: "increment", step: 2});
+datastore.dispatch({type: "increment", step: -1}};
 datastore.dispatch({type: "decrement"});
 ```
 

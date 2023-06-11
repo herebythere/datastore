@@ -18,13 +18,16 @@ class StoreImmutable<D> implements StoreInterface<D> {
     this.dataCopy = this.copyFunc(data);
   }
 
-  dispatch(action: Action) {
-    if (!this.reactions.hasOwnProperty(action.type)) return;
+  dispatch(action: Action): boolean {
+    if (!this.reactions.hasOwnProperty(action.type)) return false;
 
     const reaction = this.reactions[action.type];
-    reaction(this.data, action);
+    const stateHasChanged = reaction(this.data, action);
+    if (stateHasChanged) {
+      this.dataCopy = this.copyFunc(this.data);
+    }
 
-    this.dataCopy = this.copyFunc(this.data);
+    return stateHasChanged;
   }
 
   getState(): D {

@@ -10,9 +10,9 @@ class Store {
         this.data = data;
     }
     dispatch(action) {
-        if (!this.reactions.hasOwnProperty(action.type)) return;
+        if (!this.reactions.hasOwnProperty(action.type)) return false;
         const reaction = this.reactions[action.type];
-        reaction(this.data, action);
+        return reaction(this.data, action);
     }
     getState() {
         return this.data;
@@ -30,10 +30,11 @@ class StoreImmutable {
         this.dataCopy = this.copyFunc(data);
     }
     dispatch(action) {
-        if (!this.reactions.hasOwnProperty(action.type)) return;
+        if (!this.reactions.hasOwnProperty(action.type)) return false;
         const reaction = this.reactions[action.type];
         reaction(this.data, action);
         this.dataCopy = this.copyFunc(this.data);
+        return true;
     }
     getState() {
         return this.dataCopy;
