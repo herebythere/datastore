@@ -31,17 +31,17 @@ from the `action` can be used to update `state`.
 (state: State, action: Action) => void;
 ```
 
-`Reactions` are a map of `reaction` functions
+`Reactions` are a map of `reaction` functions.
 
 ```
 Reactions {
-	[type]: (state: State, action: Action) => void;
+	[Action.type]: (state: State, action: Action) => void;
 }
 ```
 
-The `store` modifies itself through reactions. A `dispatch` method passes
-`actions` to `reactions` to update state. A `getState` method passes a reference
-to `state`.
+A `Store` contains references to `State` and `Reactions`. A `dispatch` method
+passes `actions` to `reactions` to update state. A `getState` method passes a
+reference to `state`.
 
 ```
 Store {
@@ -55,4 +55,4 @@ Store {
 
 ## Licence
 
-BSD 3-Clause License
+Datastore is released under the BSD 3-Clause License
