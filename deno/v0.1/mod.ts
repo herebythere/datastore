@@ -1,6 +1,6 @@
 export type {
   Action,
-  Copy,
+  CopyFunc,
   Reaction,
   Reactions,
   StoreInterface,

@@ -5,8 +5,8 @@ import type {
 } from "../type_flyweight/store.ts";
 
 class Store<D> implements StoreInterface<D> {
-  private reactions: Reactions<D>;
-  private data: D;
+  reactions: Reactions<D>;
+  data: D;
 
   constructor(reactions: Reactions<D>, data: D) {
     this.reactions = reactions;

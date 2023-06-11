@@ -20,20 +20,20 @@ class Store {
 }
 class StoreImmutable {
     reactions;
+    copyFunc;
     data;
-    copy;
     dataCopy;
-    constructor(reactions, data, copy){
+    constructor(reactions, data, copyFunc){
         this.reactions = reactions;
-        this.data = data;
-        this.copy = copy;
-        this.dataCopy = this.copy(this.data);
+        this.copyFunc = copyFunc;
+        this.data = this.copyFunc(data);
+        this.dataCopy = this.copyFunc(data);
     }
     dispatch(action) {
         const reaction = this.reactions[action.type];
         if (reaction === undefined) return;
         reaction(this.data, action);
-        this.dataCopy = this.copy(this.data);
+        this.dataCopy = this.copyFunc(this.data);
     }
     getState() {
         return this.dataCopy;
