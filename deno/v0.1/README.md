@@ -1,10 +1,6 @@
 # Datastore
 
-Manage application data.
-
-## Abstract
-
-Datastore is a portable state manager.
+Manage application data with a portable state manager pattern.
 
 ## How to build
 
