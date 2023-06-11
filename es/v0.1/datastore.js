@@ -10,9 +10,9 @@ class Store {
         this.data = data;
     }
     dispatch(action) {
+        if (!this.reactions.hasOwnProperty(action.type)) return false;
         const reaction = this.reactions[action.type];
-        if (reaction === undefined) return;
-        reaction(this.data, action);
+        return reaction(this.data, action);
     }
     getState() {
         return this.data;
@@ -20,48 +20,25 @@ class Store {
 }
 class StoreImmutable {
     reactions;
+    copyFunc;
     data;
-    copy;
     dataCopy;
-    constructor(reactions, data, copy){
+    constructor(reactions, data, copyFunc){
         this.reactions = reactions;
-        this.data = data;
-        this.copy = copy;
-        this.dataCopy = this.copy(this.data);
+        this.copyFunc = copyFunc;
+        this.data = this.copyFunc(data);
+        this.dataCopy = this.copyFunc(data);
     }
     dispatch(action) {
+        if (!this.reactions.hasOwnProperty(action.type)) return false;
         const reaction = this.reactions[action.type];
-        if (reaction === undefined) return;
         reaction(this.data, action);
-        this.dataCopy = this.copy(this.data);
+        this.dataCopy = this.copyFunc(this.data);
+        return true;
     }
     getState() {
         return this.dataCopy;
     }
 }
-class StoreMultiChannel {
-    reactionMap = new Map();
-    data;
-    constructor(data){
-        this.data = data;
-    }
-    setChannel(name, reactions) {
-        this.reactionMap.set(name, reactions);
-    }
-    removeChannel(name) {
-        this.reactionMap.delete(name);
-    }
-    dispatch(action) {
-        for (const [channel, reactions] of this.reactionMap){
-            const reaction = reactions[action.type];
-            if (reaction === undefined) return;
-            reaction(this.data, action);
-        }
-    }
-    getState() {
-        return this.data;
-    }
-}
 export { Store as Store };
 export { StoreImmutable as StoreImmutable };
-export { StoreMultiChannel as StoreMultiChannel };

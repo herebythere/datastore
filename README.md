@@ -1,90 +1,70 @@
 # Datastore
 
-Manage application data.
+Manage application data with a portable state manager pattern.
+
+[Deno](./deno/v0.1/) [ECMAScript](./es/v0.1/)
 
 ## Abstract
 
-Datastore is a portable state manager.
+### State
 
-## About
-
-Data store is a slice of application state. `State` is a context or object
-reference that exists as a single instance.
+`Datastore` is application state. `State` is a singular context or object
+instance.
 
 ```
 State { }
 ```
 
-An action is a context that provides the store with details to update state.
+### Actions
+
+An `action` provides the store with details to update state.
 
 ```
 Action {
 	type: string
+	params: unknown
 }
 ```
 
-The store modifies itself through reactions. A `reaction` is a function that
-takes `State` and an `Action` as arguments.
+### Reactions
+
+A `reaction` is a function that takes `State` and an `Action` as arguments. Data
+from the `action` can be used to update `state`. A `reaction` returns a
+`boolean` to indicate if the state was updated.
 
 ```
-(state: State, action: Action) => void;
+Reaction {
+	(state: State, action: Action) => boolean;
+}
 ```
 
-`Reactions` are a map of `reaction` functions
+`Reactions` are a map of `reaction` functions.
 
 ```
 Reactions {
-	[type]: (state: State, action: Action) => void;
+	[Action.type]: Reaction;
 }
 ```
 
-## How to use
+### Store
 
-Create a context for state:
+A `Store` contains references to `State` and `Reactions`.
+
+A `dispatch` method passes an `action` to a `reaction` and returns the results
+of a `reaction` to confirm if state has changed.
+
+A `getState` method returns a reference to `state`.
 
 ```
-const state = {
-	count: 0;
+Store {
+	reactions: Reactions
+	data: State
+	
+	dispatch(action): boolean
+	getState(): State
 }
-```
-
-Create a `reaction` map:
-
-```
-const reactions = {
-	"increment": function(action, state) {
-		state.count += 1;
-	},
-	"decrement": function(action, state) {
-		state.count -= 1;
-	},
-	"reset": function(action, state) {
-		state.count = 0;
-	}
-}
-```
-
-Create an instance of a data store:
-
-```
-const datastore = new Datastore(reactions, state);
-```
-
-Next use the `dispatch` to send an action to the `reaction` map.
-
-```
-dispatch({type: "increment"});
-dispatch({type: "increment"}};
-dispatch({type: "decrement"});
-```
-
-Then use the `getState` function to retrieve the updated state.
-
-```
-const state = datastore.getState()
-// state.count === 1
 ```
 
 ## Licence
 
-BSD 3-Clause License
+Datastore is released under the BSD 3-Clause License

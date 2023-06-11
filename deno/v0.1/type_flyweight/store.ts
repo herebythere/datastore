@@ -2,7 +2,9 @@ interface Action {
   type: string;
 }
 
-type Reaction<S> = (storeData: S, action: Action) => void;
+type CopyFunc<D> = (data: D) => D;
+
+type Reaction<S> = (storeData: S, action: Action) => boolean;
 
 type Reactions<S> = Record<string, Reaction<S>>;
 
@@ -11,6 +13,4 @@ interface StoreInterface<D> {
   getState(): D;
 }
 
-type Copy<D> = (data: D) => D;
-
-export type { Action, Copy, Reaction, Reactions, StoreInterface };
+export type { Action, CopyFunc, Reaction, Reactions, StoreInterface };
