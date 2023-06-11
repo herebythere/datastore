@@ -4,7 +4,7 @@ Manage application data with a portable state manager pattern.
 
 ## How to build
 
-```
+```SH
 bash build-datastore.sh
 ```
 
@@ -16,14 +16,14 @@ Create a context for `state`.
 
 The following example defines `state` for a `counter`.
 
-```
+```TS
 interface State {
   count: number,
 }
 
 const state = {
 	count: 0;
-}
+};
 ```
 
 ### Actions
@@ -32,7 +32,7 @@ Define `actions` by creating context with a `type` property.
 
 The following example defines two `actions`: `increment` and `reset`.
 
-```
+```TS
 interface Increment {
 	type: "increment";
 	step: number;
@@ -54,25 +54,30 @@ arguments and returns a `boolean` to indicate if `state` changed.
 The following example defines `reactions` with a `reaction` corresponding to
 each `action`.
 
-```
-const reactions: Reactions = {
-	"increment": function(state: State, action: Actions) {
-		if (action.type !== "increment") return false;
-		state.count += action.step;
-		return true;
-	},
-	"reset": function(state: State, action: Actions) {
-		state.count = 0;
-		return true;
-	},
+```TS
+function increment(state: State, action: Actions) {
+	if (action.type !== "increment") return false;
+
+	state.count += action.step;
+	return true;
 }
+
+function reset(state: State, action: Actions) {
+	state.count = 0;
+	return true;
+}
+
+const reactions: Reactions = new Map([
+	["increment", increment],
+	["reset", reset],
+]);
 ```
 
 ### Import
 
 Import `Store` or clone this repository into your project.
 
-```
+```TS
 import { Store } from "https://raw.githubusercontent.com/herebythere/datastore/main/deno/v0.1/mod.ts"
 ```
 
@@ -80,13 +85,13 @@ import { Store } from "https://raw.githubusercontent.com/herebythere/datastore/m
 
 Create a `Store` instsance with `reactions` and `state`.
 
-```
+```TS
 const datastore = new Store(reactions, state);
 ```
 
 Next use the `dispatch` method to send an action to the `reaction` map.
 
-```
+```TS
 datastore.dispatch({type: "increment", step: 2});
 datastore.dispatch({type: "increment", step: -1}};
 datastore.dispatch({type: "decrement"});
@@ -94,7 +99,7 @@ datastore.dispatch({type: "decrement"});
 
 Then use the `getState` method to retrieve the updated state.
 
-```
+```TS
 const state = datastore.getState()
 // state.count === 1
 ```

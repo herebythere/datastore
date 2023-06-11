@@ -14,9 +14,9 @@ class Store<D> implements StoreInterface<D> {
   }
 
   dispatch(action: Action): boolean {
-    if (!this.reactions.hasOwnProperty(action.type)) return false;
+    const reaction = this.reactions.get(action.type);
+    if (reaction === undefined) return false;
 
-    const reaction = this.reactions[action.type];
     return reaction(this.data, action);
   }
 

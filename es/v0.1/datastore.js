@@ -10,8 +10,8 @@ class Store {
         this.data = data;
     }
     dispatch(action) {
-        if (!this.reactions.hasOwnProperty(action.type)) return false;
-        const reaction = this.reactions[action.type];
+        const reaction = this.reactions.get(action.type);
+        if (reaction === undefined) return false;
         return reaction(this.data, action);
     }
     getState() {
@@ -26,15 +26,17 @@ class StoreImmutable {
     constructor(reactions, data, copyFunc){
         this.reactions = reactions;
         this.copyFunc = copyFunc;
-        this.data = this.copyFunc(data);
-        this.dataCopy = this.copyFunc(data);
+        this.data = copyFunc(data);
+        this.dataCopy = copyFunc(data);
     }
     dispatch(action) {
-        if (!this.reactions.hasOwnProperty(action.type)) return false;
-        const reaction = this.reactions[action.type];
-        reaction(this.data, action);
-        this.dataCopy = this.copyFunc(this.data);
-        return true;
+        const reaction = this.reactions.get(action.type);
+        if (reaction === undefined) return false;
+        const stateHasChanged = reaction(this.data, action);
+        if (stateHasChanged) {
+            this.dataCopy = this.copyFunc(this.data);
+        }
+        return stateHasChanged;
     }
     getState() {
         return this.dataCopy;
