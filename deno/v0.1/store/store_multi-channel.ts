@@ -4,6 +4,7 @@ import type {
   StoreInterface,
 } from "../type_flyweight/store.ts";
 
+// maybe multi channel isn't needed? revamp?
 class StoreMultiChannel<D> implements StoreInterface<D> {
   private reactionMap = new Map<string, Reactions<D>>();
   private data: D;
