@@ -18,11 +18,11 @@ The following example defines `state` for a `counter`.
 
 ```TS
 interface State {
- 	count: number,
+  count: number,
 }
 
 const state: State = {
-	count: 0;
+  count: 0;
 };
 ```
 
@@ -94,7 +94,7 @@ Next use the `dispatch` method to send an action to the `reaction` map.
 
 ```TS
 datastore.dispatch({type: "increment", step: 2});
-datastore.dispatch({type: "increment", step: -1}};
+datastore.dispatch({type: "increment", step: -1});
 datastore.dispatch({type: "decrement"});
 ```
 
