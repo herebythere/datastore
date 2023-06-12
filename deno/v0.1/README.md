@@ -95,7 +95,6 @@ Next use the `dispatch` method to send an action to the `reaction` map.
 ```TS
 datastore.dispatch({type: "increment", step: 2});
 datastore.dispatch({type: "increment", step: -1});
-datastore.dispatch({type: "decrement"});
 ```
 
 Then use the `getState` method to retrieve the updated state.
