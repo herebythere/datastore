@@ -18,7 +18,7 @@ The following example defines `state` for a `counter`.
 
 ```TS
 interface State {
-  count: number,
+ 	count: number,
 }
 
 const state: State = {
