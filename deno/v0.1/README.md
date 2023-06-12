@@ -21,7 +21,7 @@ interface State {
   count: number,
 }
 
-const state = {
+const state: State = {
 	count: 0;
 };
 ```
@@ -34,12 +34,12 @@ The following example defines two `actions`: `increment` and `reset`.
 
 ```TS
 interface Increment {
-	type: "increment";
-	step: number;
+  type: "increment";
+  step: number;
 }
 
 interface Reset {
-	type: "reset";
+  type: "reset";
 }
 
 type Actions = Increment | Reset;
@@ -47,8 +47,9 @@ type Actions = Increment | Reset;
 
 ### Reactions
 
-Define `reactions` by creating `reaction` functions for each `action.type`. A
-`reaction` is a function that takes `state` and an optional `action` as
+Define `reactions` by creating `reaction` functions for each `action.type`.
+
+A `reaction` is a function that takes `state` and an optional `action` as
 arguments and returns a `boolean` to indicate if `state` changed.
 
 The following example defines `reactions` with a `reaction` corresponding to
@@ -56,20 +57,20 @@ each `action`.
 
 ```TS
 function increment(state: State, action: Actions) {
-	if (action.type !== "increment") return false;
+  if (action.type !== "increment") return false;
 
-	state.count += action.step;
-	return true;
+  state.count += action.step;
+  return true;
 }
 
 function reset(state: State, action: Actions) {
-	state.count = 0;
-	return true;
+  state.count = 0;
+  return true;
 }
 
-const reactions: Reactions = new Map([
-	["increment", increment],
-	["reset", reset],
+const reactions: Reactions = new Map<string, Reaction>([
+  ["increment", increment],
+  ["reset", reset],
 ]);
 ```
 
@@ -78,7 +79,7 @@ const reactions: Reactions = new Map([
 Import `Store` or clone this repository into your project.
 
 ```TS
-import { Store } from "https://raw.githubusercontent.com/herebythere/datastore/main/deno/v0.1/mod.ts"
+import { Store } from "https://raw.githubusercontent.com/herebythere/datastore/main/deno/v0.1/mod.ts";
 ```
 
 ### Store
@@ -86,7 +87,7 @@ import { Store } from "https://raw.githubusercontent.com/herebythere/datastore/m
 Create a `Store` instsance with `reactions` and `state`.
 
 ```TS
-const datastore = new Store(reactions, state);
+const datastore = new Store<State, Actions>(state, reactions);
 ```
 
 Next use the `dispatch` method to send an action to the `reaction` map.
@@ -100,7 +101,7 @@ datastore.dispatch({type: "decrement"});
 Then use the `getState` method to retrieve the updated state.
 
 ```TS
-const state = datastore.getState()
+const state = datastore.getState();
 // state.count === 1
 ```
 
