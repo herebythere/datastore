@@ -107,4 +107,4 @@ const state = datastore.getState();
 
 ## Licence
 
-Datastore is released under the BSD 3-Clause License
+Datastore is released under the BSD 3-Clause License.
