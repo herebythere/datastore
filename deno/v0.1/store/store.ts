@@ -4,7 +4,7 @@ import type {
   StoreInterface,
 } from "../type_flyweight/store.ts";
 
-class Store<D> implements StoreInterface<D> {
+class Store<D, A extends Action> implements StoreInterface<D, A> {
   reactions: Reactions<D>;
   data: D;
 
@@ -13,10 +13,10 @@ class Store<D> implements StoreInterface<D> {
     this.data = data;
   }
 
-  dispatch(action: Action): boolean {
-    if (!this.reactions.hasOwnProperty(action.type)) return false;
+  dispatch(action: A): boolean {
+    const reaction = this.reactions.get(action.type);
+    if (reaction === undefined) return false;
 
-    const reaction = this.reactions[action.type];
     return reaction(this.data, action);
   }
 

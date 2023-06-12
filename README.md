@@ -10,8 +10,7 @@ Manage application data with a portable state manager pattern.
 
 ### State
 
-`Datastore` is application state. `State` is a singular context or object
-instance.
+`State` is a singular context or object instance.
 
 ```
 State { }
@@ -19,7 +18,7 @@ State { }
 
 ### Actions
 
-An `action` provides the store with details to update state.
+An `action` provides details used to update `state`.
 
 ```
 Action {
@@ -30,9 +29,9 @@ Action {
 
 ### Reactions
 
-A `reaction` is a function that takes `State` and an `Action` as arguments. Data
-from the `action` can be used to update `state`. A `reaction` returns a
-`boolean` to indicate if the state was updated.
+A `reaction` is a function that takes `state` and an `action` as arguments. Data
+from an `action` is used to update `state`. A `reaction` returns a `boolean` to
+indicate if `state` was updated.
 
 ```
 Reaction {
@@ -53,7 +52,7 @@ Reactions {
 A `Store` contains references to `State` and `Reactions`.
 
 A `dispatch` method passes an `action` to a `reaction` and returns the results
-of a `reaction` to confirm if state has changed.
+of that `reaction` to confirm if state has changed.
 
 A `getState` method returns a reference to `state`.
 
@@ -69,4 +68,4 @@ Store {
 
 ## Licence
 
-Datastore is released under the BSD 3-Clause License
+Datastore is released under the BSD 3-Clause License.
